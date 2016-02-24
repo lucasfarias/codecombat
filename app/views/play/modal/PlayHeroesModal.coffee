@@ -116,6 +116,9 @@ module.exports = class PlayHeroesModal extends ModalView
         #{id: 'io', name: "Io (#{$.i18n.t('choose_hero.experimental')})"}
       ]
 
+      if me.isAdmin() or not application.isProduction()
+        @codeLanguageList.push {id: 'java', name: "Java (#{$.i18n.t('choose_hero.experimental')})"}
+
   onHeroChanged: (e) ->
     direction = e.direction  # 'left' or 'right'
     heroItem = $(e.relatedTarget)
@@ -136,7 +139,7 @@ module.exports = class PlayHeroesModal extends ModalView
       return fullHero
     fullHero = new ThangType()
     fullHero.setURL url
-    fullHero = (@supermodel.loadModel fullHero, 'thang').model
+    fullHero = (@supermodel.loadModel fullHero).model
     fullHero
 
   preloadHero: (heroIndex) ->
@@ -281,7 +284,6 @@ module.exports = class PlayHeroesModal extends ModalView
     popover?.$tip?.i18n()
 
   onBuyGemsPromptButtonClicked: (e) ->
-    @playSound 'menu-button-click'
     return @askToSignUp() if me.get('anonymous')
     @openModalView new BuyGemsModal()
 

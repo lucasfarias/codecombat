@@ -53,7 +53,7 @@ _.extend UserSchema.properties,
   iosIdentifierForVendor: c.shortString({format: 'hidden'})
   firstName: c.shortString({title: 'First Name'})
   lastName: c.shortString({title: 'Last Name'})
-  gender: {type: 'string', 'enum': ['male', 'female', 'secret', 'trans']}
+  gender: {type: 'string'} # , 'enum': ['male', 'female', 'secret', 'trans', 'other']
   ageRange: {type: 'string'}  # 'enum': ['0-13', '14-17', '18-24', '25-34', '35-44', '45-100']
   password: {type: 'string', maxLength: 256, minLength: 2, title: 'Password'}
   passwordReset: {type: 'string'}
@@ -79,6 +79,7 @@ _.extend UserSchema.properties,
     archmageNews: {$ref: '#/definitions/emailSubscription'}
     artisanNews: {$ref: '#/definitions/emailSubscription'}
     diplomatNews: {$ref: '#/definitions/emailSubscription'}
+    teacherNews: {$ref: '#/definitions/emailSubscription'}
     scribeNews: {$ref: '#/definitions/emailSubscription'}
 
     # notifications
@@ -117,7 +118,7 @@ _.extend UserSchema.properties,
     colorConfig: c.object {additionalProperties: c.colorConfig()}
 
   aceConfig: c.object { default: { language: 'python', keyBindings: 'default', invisibles: false, indentGuides: false, behaviors: false, liveCompletion: true }},
-    language: {type: 'string', 'enum': ['python', 'javascript', 'coffeescript', 'clojure', 'lua', 'io']}
+    language: {type: 'string', 'enum': ['python', 'javascript', 'coffeescript', 'clojure', 'lua', 'java', 'io']}
     keyBindings: {type: 'string', 'enum': ['default', 'vim', 'emacs']}
     invisibles: {type: 'boolean' }
     indentGuides: {type: 'boolean' }
@@ -326,6 +327,7 @@ _.extend UserSchema.properties,
     description: 'Prepaid which has paid for this user\'s course access'
   })
   schoolName: {type: 'string'}
+  role: {type: 'string'}  # unset, 'student', 'teacher', 'parent', 'technology coordinator', 'advisor', 'principal', 'superintendent', ...
 
 c.extendBasicProperties UserSchema, 'user'
 
